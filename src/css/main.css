@@ -22,18 +22,28 @@ input {
   color: #171717;
 }
 
-body,
+body {
+  background: #f1f1f1;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .search-bar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-body {
-  background: #f1f1f1;
-}
-
 .search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -207,4 +217,28 @@ input {
   .search-btn {
     background: #f1f1f1;
   }
+}
+.gallery-image {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  color: black;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.info-item {
+  text-align: center;
+  padding: 10px;
+  outline: 1;
+  font-size: 14px;
+  border: 1px solid black;
+  border-left: none;
+}
+.info-item:first-child {
+  border-left: 1px solid black;
 }/*# sourceMappingURL=main.css.map */

@@ -17,10 +17,13 @@ body,
 input {
   color: #171717;
 }
-body,
-.search-bar {
-  display: flex;
-}
+
 body {
   background: #f1f1f1;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
 }

@@ -1,0 +1,27 @@
+.gallery-image {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  color: black;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.info-item {
+  text-align: center;
+  padding: 10px;
+  outline: 1;
+  font-size: 14px;
+
+  border: 1px solid black;
+  border-left: none;
+
+  &:first-child {
+    border-left: 1px solid black;
+  }
+}
