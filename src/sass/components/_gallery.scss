@@ -1,10 +1,30 @@
 .gallery-image {
   padding: 20px;
+  margin-bottom: 30px;
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-auto-rows: 1fr;
+  gap: 40px 40px;
 
   color: rgb(23, 23, 23);
+}
+.photo-card {
+  height: 100%;
+  display: grid;
+  border-radius: 0.375em;
+  overflow: hidden;
+  box-shadow: 3px 4px 5px rgba(2, 10, 56, 0.2);
+}
+.link-image {
+  max-width: 500px;
+  height: 240px;
+  overflow: hidden;
+}
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .info {
@@ -13,18 +33,24 @@
 }
 
 .info-item {
+  position: relative;
   text-align: center;
   padding: 14px;
   outline: 1;
   font-size: 14px;
-
-  border: 1px solid rgb(23, 23, 23);
-  border-left: none;
-
-  &:first-child {
-    border-left: 1px solid rgb(23, 23, 23);
+  &::before {
+    content: '';
+    height: 40px;
+    border: 0.5px solid #e0e0e0;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+  }
+  &:last-child::before {
+    border: none;
   }
 }
+
 .info-item p {
   display: block;
   line-height: 14px;
