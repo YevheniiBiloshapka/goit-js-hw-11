@@ -4,7 +4,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 
-  color: black;
+  color: rgb(23, 23, 23);
 }
 
 .info {
@@ -14,14 +14,30 @@
 
 .info-item {
   text-align: center;
-  padding: 10px;
+  padding: 14px;
   outline: 1;
   font-size: 14px;
 
-  border: 1px solid black;
+  border: 1px solid rgb(23, 23, 23);
   border-left: none;
 
   &:first-child {
-    border-left: 1px solid black;
+    border-left: 1px solid rgb(23, 23, 23);
   }
+}
+.info-item p {
+  display: block;
+  line-height: 14px;
+}
+.info-item b {
+  display: block;
+  line-height: 14px;
+  margin-bottom: 7px;
+}
+
+.info-item span {
+  font-size: 12px;
+  line-height: 12px;
+  display: block;
+  color: rgb(78, 78, 78);
 }
