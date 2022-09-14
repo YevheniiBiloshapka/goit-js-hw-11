@@ -1,36 +1,69 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import cardImage from './templates/card-image.hbs';
 import { ImageAPI } from './module/fetch-images';
+
+const imageApi = new ImageAPI();
+const lightbox = new SimpleLightbox('.photo-card a');
 
 const gallery = document.querySelector('.gallery-image');
 const loadMoreBtn = document.querySelector('.load-more');
 const form = document.querySelector('.search-bar');
 form.addEventListener('submit', onFormSubmit);
 
-const currentPage = 1;
-
 async function onFormSubmit(e) {
   e.preventDefault();
   gallery.innerHTML = '';
-  currentPage = 1;
 
-  const query = form.elements.searchQuery.value;
-  if (query === '') {
+  const query = form.elements.searchQuery.value.trim();
+  if (!query) {
+    Notify.info('Please, enter key word for search!');
     return;
   }
-  const data = await ImageAPI.fetchImage(query);
-  renderCardImage(data.data.hits);
-  console.log(data.data);
+  imageApi.setPage();
+  try {
+    const response = await imageApi.fetchImage(query);
+    const { hits, totalHits } = response.data;
+    renderCardImage(hits);
 
-  if (data.data.totalHits > 40) {
-    loadMoreBtn.classList.remove('visually-hidden');
-  } else {
-    loadMoreBtn.classList.add('visually-hidden');
+    if (totalHits > 40) {
+      Notify.success(`Hooray! We found ${totalHits} images.`);
+      loadMoreBtn.classList.remove('visually-hidden');
+    } else {
+      loadMoreBtn.classList.add('visually-hidden');
+    }
+  } catch (err) {
+    Notify.warning(err.message);
   }
 }
 
-// ? RENDER -------------------------------------------------------------
 function renderCardImage(arr) {
   const markup = arr.map(item => cardImage(item)).join('');
 
   gallery.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
+}
+
+loadMoreBtn.addEventListener('click', onClickLoadMoreBtn);
+
+async function onClickLoadMoreBtn() {
+  try {
+    const response = await imageApi.fetchImage();
+    const { hits, totalHits } = response.data;
+    renderCardImage(hits);
+    imageApi.increasePage();
+
+    const {
+      params: { page, per_page },
+    } = imageApi;
+    if (page > totalHits / per_page) {
+      loadMoreBtn.classList.add('visually-hidden');
+      throw new Error(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
+  } catch (err) {
+    Notify.info(err.message);
+  }
 }
