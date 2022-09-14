@@ -33,9 +33,9 @@ async function onFormSubmit(e) {
     renderCardImage(hits);
 
     Notify.success(`Hooray! We found ${totalHits} images.`);
-    if (totalHits > searchQuery.params.per_page) {
-      btnLoadRef.classList.remove('visually-hidden');
-      searchQuery.increasePage();
+    if (totalHits > imageApi.params.per_page) {
+      loadMoreBtn.classList.remove('visually-hidden');
+      imageApi.increasePage();
     }
   } catch (err) {
     Notify.warning(err.message);
