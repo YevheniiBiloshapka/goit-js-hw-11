@@ -16,7 +16,7 @@ async function onFormSubmit(e) {
   e.preventDefault();
   gallery.innerHTML = '';
 
-  const query = form.elements.searchQuery.value.trim();
+  const query = e.target.elements.searchQuery.value.trim();
   if (!query) {
     Notify.info('Please, enter key word for search!');
     return;
@@ -25,13 +25,17 @@ async function onFormSubmit(e) {
   try {
     const response = await imageApi.fetchImage(query);
     const { hits, totalHits } = response.data;
+    if (!hits.length) {
+      throw new Error(
+        'Sorry, there are no images matching your search query. Please try again'
+      );
+    }
     renderCardImage(hits);
 
-    if (totalHits > 40) {
-      Notify.success(`Hooray! We found ${totalHits} images.`);
-      loadMoreBtn.classList.remove('visually-hidden');
-    } else {
-      loadMoreBtn.classList.add('visually-hidden');
+    Notify.success(`Hooray! We found ${totalHits} images.`);
+    if (totalHits > searchQuery.params.per_page) {
+      btnLoadRef.classList.remove('visually-hidden');
+      searchQuery.increasePage();
     }
   } catch (err) {
     Notify.warning(err.message);
